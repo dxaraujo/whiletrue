@@ -13,7 +13,7 @@ SPIDER_MODULES = ['whiletrue.spiders']
 NEWSPIDER_MODULE = 'whiletrue.spiders'
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-# USER_AGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:40.0) Gecko/20100101 Firefox/39.0'
+USER_AGENT = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/22.0.1207.1 Safari/537.1"
 
 # Obey robots.txt rules
 # ROBOTSTXT_OBEY = True
