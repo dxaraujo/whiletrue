@@ -7,23 +7,29 @@ from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule
 # from scrapy.shell import inspect_response
 
-def process_value(value):
-    m = re.search("\#pagina\=([0-9]*)", value)
-    if m:
-        return '?__vt=lnv:c&pagina=' + m.group(1)
+# def process_value(value):
+#     m = re.search("\#pagina\=([0-9]*)", value)
+#     if m:
+#         return '?__vt=lnv:c&pagina=' + m.group(1)
 
-class VivarealSpider(CrawlSpider):
+class VivarealSpider(scrapy.Spider):
 
     name = 'vivareal'
     allowed_domains = ['www.vivareal.com.br']
-    start_urls = ['https://www.vivareal.com.br/venda/sp/sao-paulo/zona-leste/vila-prudente/']
+    start_urls = [
+        'https://www.vivareal.com.br/venda/sp/sao-paulo/zona-leste/vila-prudente/?__vt=lnv#preco-ate=100000&preco-desde=200000',
+        'https://www.vivareal.com.br/venda/sp/sao-paulo/zona-leste/vila-prudente/?__vt=lnv#preco-ate=200000&preco-desde=300000',
+        'https://www.vivareal.com.br/venda/sp/sao-paulo/zona-leste/vila-prudente/?__vt=lnv#preco-ate=300000&preco-desde=400000',
+        'https://www.vivareal.com.br/venda/sp/sao-paulo/zona-leste/vila-prudente/?__vt=lnv#preco-ate=400000&preco-desde=500000',
+        'https://www.vivareal.com.br/venda/sp/sao-paulo/zona-leste/vila-prudente/?__vt=lnv#preco-ate=500000&preco-desde=600000',
+    ]
 
-    rules = (
-        Rule(LinkExtractor(restrict_xpaths='//a[contains(@title,"Próxima página")]', process_value=process_value), follow=True),
-        Rule(LinkExtractor(allow=r'pagina=*'), callback='parse_item'),
-    )
+    # rules = (
+    #     Rule(LinkExtractor(restrict_xpaths='//a[contains(@title,"Próxima página")]', process_value=process_value), follow=True),
+    #     Rule(LinkExtractor(allow=r'pagina=*'), callback='parse_item'),
+    # )
 
-    def parse_item(self, response):
+    def parse(self, response):
 
         items = response.xpath('//div[contains(@class,"js-card-selector")]//article[contains(@class,"js-property-card")]')
 
@@ -34,9 +40,9 @@ class VivarealSpider(CrawlSpider):
                 yield scrapy.Request(url=url, callback=self.parse_detail)
 
         # inspect_response(response, self)
-        # nextPage = response.xpath('//a[contains(@title,"Próxima página")]/@data-page').extract_first()
+        # nextPage = response.xpath('//a[contains(@title,"Próxima página")]/@href').extract_first()
         # if nextPage:
-        #     nextUrl = self.base_url_next_page + '?__vt=lnv:c#pagina=' + str(nextPage)
+        #     nextUrl = response.urljoin(nextPage)
         #     yield scrapy.Request(url=nextUrl, callback=self.parse)
         # yield scrapy.Request(url=response.url, callback=self.parse_detail)
 
