@@ -13,10 +13,10 @@ SPIDER_MODULES = ['whiletrue.spiders']
 NEWSPIDER_MODULE = 'whiletrue.spiders'
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-USER_AGENT = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/22.0.1207.1 Safari/537.1"
+USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36"
 
 # Obey robots.txt rules
-# ROBOTSTXT_OBEY = True
+ROBOTSTXT_OBEY = False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 CONCURRENT_REQUESTS = 1
@@ -37,8 +37,7 @@ DOWNLOAD_DELAY = 60
 
 # Override the default request headers:
 DEFAULT_REQUEST_HEADERS = {
-    'x-domain': 'www.zapimoveis.com.br',
-    # 'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36'
+    'x-domain': 'www.zapimoveis.com.br'
 }
 
 # Enable or disable spider middlewares
