@@ -6,5 +6,5 @@ Esta aplicação implementa um crawler para colher dados dos imóveis a venda e 
 ## run
 
 ```
-    scrapy crawl vivareal -t csv -o imovel.csv
+    scrapy crawl zap
 ```
