@@ -1,24 +1,53 @@
 # Define here the models for your scraped items
 #
 # See documentation in:
-# https://docs.scrapy.org/en/latest/topics/items.html
+# https://docs.org/en/latest/topics/items.html
 
-import scrapy
+from scrapy import Item, Field
 
-class WhiletrueItem(scrapy.Item):
-    id              = scrapy.Field()
-    titulo          = scrapy.Field()
-    endereco        = scrapy.Field()
-    lat             = scrapy.Field()
-    lon             = scrapy.Field()
-    data            = scrapy.Field()
-    preco           = scrapy.Field()
-    condominio      = scrapy.Field()
-    iptu            = scrapy.Field()
-    area            = scrapy.Field()
-    quartos         = scrapy.Field()
-    banheiros       = scrapy.Field()
-    suites          = scrapy.Field()
-    vagas           = scrapy.Field()
-    descricao       = scrapy.Field()
-    url             = scrapy.Field()
+class WhiletrueItem(Item):
+    id              = Field()
+    titulo          = Field()
+    endereco        = Field()
+    lat             = Field()
+    lon             = Field()
+    data            = Field()
+    preco           = Field()
+    condominio      = Field()
+    iptu            = Field()
+    area            = Field()
+    quartos         = Field()
+    banheiros       = Field()
+    suites          = Field()
+    vagas           = Field()
+    descricao       = Field()
+    url             = Field()
+
+class ZapItem(Item):
+    id              = Field()
+    createdAt       = Field()
+    title           = Field()
+    description     = Field()
+    businessType    = Field()
+    country         = Field()
+    state           = Field()
+    stateAcronym    = Field()
+    city            = Field()
+    zipCode         = Field()
+    level           = Field()
+    street          = Field()
+    streetNumber    = Field()
+    complement      = Field()
+    latitude        = Field()
+    longitude       = Field()
+    bathrooms       = Field()
+    bedrooms        = Field()
+    suites          = Field()
+    parkingSpaces   = Field()
+    monthlyCondoFee = Field()
+    yearlyIptu      = Field()
+    price           = Field()
+    totalAreas      = Field()
+    usableAreas     = Field()
+    usageTypes      = Field()
+    url             = Field()
