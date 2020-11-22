@@ -43,6 +43,7 @@ class ZapSpider(scrapy.Spider):
             item['city'] = listing['listing']['address'].get('city', '')
             item['zipCode'] = listing['listing']['address'].get('zipCode', '')
             item['complement'] = listing['listing']['address'].get('complement', '')
+            item['neighborhood'] = listing['listing']['address'].get('neighborhood', '')
 
             item['latitude'] = 0
             item['longitude'] = 0
@@ -99,11 +100,18 @@ class ZapSpider(scrapy.Spider):
                 if len(usageTypes) > 0:
                     item['usageTypes'] = usageTypes[0]
 
+            item['unitTypes'] = ''
+            unitTypes = listing['listing'].get('unitTypes', '')
+            if unitTypes:
+                if len(unitTypes) > 0:
+                    item['unitTypes'] = unitTypes[0]
+
             item['image'] = ''
-            media = listing.get('media', '')
+            media = listing.get('medias', '')
             if media:
                 if len(media) > 0:
                     item['image'] = media[0]['url']
+
 
             href = listing['link'].get('href', '')
             item['url'] = self.domain + href

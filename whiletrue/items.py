@@ -53,3 +53,5 @@ class ZapItem(Item):
     usageTypes      = Field()
     image           = Field()
     url             = Field()
+    unitTypes       = Field()
+    neighborhood    = Field()
