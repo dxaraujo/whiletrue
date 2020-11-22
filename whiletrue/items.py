@@ -29,6 +29,7 @@ class ZapItem(Item):
     title           = Field()
     description     = Field()
     businessType    = Field()
+    listingType     = Field()
     country         = Field()
     state           = Field()
     stateAcronym    = Field()

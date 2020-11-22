@@ -1,6 +1,8 @@
 import scrapy
 import json
 
+from whiletrue.items import ZapItem
+
 class ZapSpider(scrapy.Spider):
 
     name = 'zap'
@@ -10,53 +12,80 @@ class ZapSpider(scrapy.Spider):
     start_urls = []
 
     size = 100
-    for i in range(0, 20):
+    for i in range(0, 100):
         start_urls.append(link.format(size, i * size, i + 1))
 
     def parse(self, response):
         jsonresponse = json.loads(response.text)
         listings = jsonresponse['search']['result']['listings']
         for listing in listings:
-            self.parse_listing(listing)
+            item = ZapItem()
+
+            item['createdAt'] = listing['listing'].get('createdAt', '')
+            item['title'] = listing['listing'].get('title', '')
+            item['description'] = listing['listing'].get('description', '')
+
+            pricingInfos = listing['listing'].get('pricingInfos', '')
+            if pricingInfos:
+                if len(pricingInfos) > 0:
+                    item['businessType'] = pricingInfos[0].get('businessType', '')
+                    item['monthlyCondoFee'] = pricingInfos[0].get('monthlyCondoFee', '')
+                    item['price'] = pricingInfos[0].get('price', '')
+                    item['yearlyIptu'] = pricingInfos[0].get('yearlyIptu', '')
+
+            item['country'] = listing['listing']['address'].get('country', '')
+            item['state'] = listing['listing']['address'].get('state', '')
+            item['stateAcronym'] = listing['listing']['address'].get('stateAcronym', '')
+            item['city'] = listing['listing']['address'].get('city', '')
+            item['zipCode'] = listing['listing']['address'].get('zipCode', '')
+            item['complement'] = listing['listing']['address'].get('complement', '')
+
+            point = listing['listing']['address'].get('point', '')
+            print(point)
+            if point:
+                item['latitude'] = point['lat']
+                item['longitude'] = point['lon']
+
+            item['level'] = listing['listing']['address'].get('level', '')
+            item['street'] = listing['listing']['address'].get('street', '')
+            item['streetNumber'] = listing['listing']['address'].get('streetNumber', '')
+
+            bathrooms = listing['listing'].get('bathrooms', '')
+            if bathrooms:
+                if len(bathrooms) > 0:
+                    item['bathrooms'] = bathrooms[0],
+
+            bedrooms = listing['listing'].get('bedrooms', '')
+            if bedrooms:
+                if len(bedrooms) > 0:
+                    item['bedrooms'] = bedrooms[0],
+
+            item['listingType'] = listing['listing'].get('listingType', '')
+
+            parkingSpaces = listing['listing'].get('parkingSpaces', '')
+            if parkingSpaces:
+                if len(parkingSpaces) > 0:
+                    item['parkingSpaces'] = parkingSpaces[0]
+
+            suites = listing['listing'].get('suites', '')
+            if suites:
+                if len(suites) > 0:
+                    item['suites'] = suites[0]
+
+            totalAreas = listing['listing'].get('totalAreas', '')
+            if totalAreas:
+                if len(totalAreas) > 0:
+                    item['totalAreas'] = totalAreas[0]
+
+            usableAreas = listing['listing'].get('usableAreas', '')
+            if usableAreas:
+                if len(usableAreas) > 0:
+                    item['usableAreas'] = usableAreas[0]
+
+            usageTypes = listing['listing'].get('usageTypes', '')
+            if usageTypes:
+                if len(usageTypes) > 0:
+                    item['usageTypes'] = usageTypes[0]
+
+            yield item
         pass
-
-    def parse_listing(self, response):
-
-        item = ZapItem()
-
-        item['createdAt'] = response['createdAt'],
-        item['title'] = response['title'],
-        item['description'] = response['description'],
-        item['businessType'] = response['pricingInfos']['businessType'],
-        item['country'] = response['address']['country'],
-        item['state'] = response['address']['state'],
-        item['stateAcronym'] = response['address']['stateAcronym'],
-        item['city'] = response['address']['city'],
-        item['zipCode'] = response['address']['zipCode'],
-        item['complement'] = response['address']['complement'],
-
-        point = response['address']['point']
-        if point:
-            item['latitude'] = point['lat']
-            item['longitude'] = response['lon']
-
-        item['level'] = response['address']['level'],
-        item['street'] = response['address']['street'],
-        item['streetNumber'] = response['address']['streetNumber'],
-
-        item['bathrooms'] = response['bathrooms'][0],
-        item['bedrooms'] = response['bedrooms'][0],
-        # buildings
-        item['listingType'] = response['listingType'],
-        item['parkingSpaces'] = response['parkingSpaces'][0],
-
-        item['monthlyCondoFee'] = response['pricingInfos']['monthlyCondoFee'],
-        item['price'] = response['pricingInfos']['price'],
-        item['yearlyIptu'] = response['pricingInfos']['yearlyIptu'],
-
-        item['suites'] = response['suites'][0],
-
-        item['totalAreas'] = response['totalAreas'][0],
-        item['usableAreas'] = response['usableAreas'][0],
-        item['usageTypes'] = response['usageTypes'][0],
-        yield item
