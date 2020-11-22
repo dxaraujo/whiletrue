@@ -51,4 +51,5 @@ class ZapItem(Item):
     totalAreas      = Field()
     usableAreas     = Field()
     usageTypes      = Field()
+    image           = Field()
     url             = Field()
