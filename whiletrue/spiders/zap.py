@@ -11,7 +11,7 @@ class ZapSpider(scrapy.Spider):
     domain = 'www.zapimoveis.com.br'
     start_urls = []
 
-    size = 300
+    size = 200
     for i in range(0, 1000):
         start_urls.append(link.format(size, i * size, i + 1))
 
