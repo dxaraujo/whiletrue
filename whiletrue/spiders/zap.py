@@ -10,7 +10,7 @@ class ZapSpider(scrapy.Spider):
     start_urls = []
 
     size = 24
-    for i in range(40,41):
+    for i in range(1,40):
         start_urls.append(link.format((i - 1) * size, i))
 
     def parse(self, response):
